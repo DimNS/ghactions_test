@@ -14,5 +14,62 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Ubuntu MySQL
-      run: sudo service mysql status
+    - name: Start MySQL [user:root password:root]
+      run: |
+        sudo systemctl start mysql.service
+        sudo mysqld --default-authentication-plugin=mysql_native_password
+    
+    - run: php -v
+    - run: php -i
+
+#      # install lemurro
+#      - run: composer global require --no-progress --no-scripts --no-plugins lemurro/installer
+#      - run: ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
+#      - run: composer install --working-dir=/home/circleci/project/testproject/api/vendor/lemurro/api-core
+#      # prepare database
+#      - run: sudo apt install default-mysql-client
+#      - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.my.sql
+#      - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
+#      # configuration
+#      - run:
+#          name: "Configuration: file.yaml"
+#          working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
+#          command: |
+#            touch ./file.yaml
+#            echo -e "file:\n  path_logs: /home/circleci/project/testproject/api/var/logs\n  path_temp: /home/circleci/project/testproject/api/var/temp\n  path_upload: /home/circleci/project/testproject/api/var/documents" > ./file.yaml
+#            cat ./file.yaml
+#      - run:
+#          name: "Configuration: guides.yaml"
+#          working_directory: /home/circleci/project/testproject/api/app/Overrides/Configs
+#          command: |
+#            touch ./guides.yaml
+#            echo -e "guides:\n  classes:\n    example: Example" > ./guides.yaml
+#            cat ./guides.yaml
+#      - run:
+#          name: "Configuration: [app]api.suite.yml"
+#          working_directory: /home/circleci/project/testproject/api/tests
+#          command: |
+#            cp ./api.suite.dist.yml ./api.suite.yml
+#            sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
+#            cat ./api.suite.yml
+#      - run:
+#          name: "Configuration: [core]api.suite.yml"
+#          working_directory: /home/circleci/project/testproject/api/vendor/lemurro/api-core/tests
+#          command: |
+#            cp ./api.suite.dist.yml ./api.suite.yml
+#            sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' ./api.suite.yml
+#            cat ./api.suite.yml
+#      - run:
+#          name: "Running web server"
+#          command: php -S localhost:8000 -t /home/circleci/project/testproject/api/public
+#          background: true
+#      - run:
+#          name: "Tests: app"
+#          command: |
+#            cd /home/circleci/project/testproject/api
+#            php vendor/bin/codecept run api
+#      - run:
+#          name: "Tests: core"
+#          command: |
+#            cd /home/circleci/project/testproject/api/vendor/lemurro/api-core
+#            php vendor/bin/codecept run api
