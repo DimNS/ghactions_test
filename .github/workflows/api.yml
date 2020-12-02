@@ -16,10 +16,7 @@ jobs:
 
     - name: Start MySQL
       run: sudo systemctl start mysql.service
-        
-#    - name: Configuration MySQL
-#      run: sudo mysqld --default-authentication-plugin=mysql_native_password
-    
+
     - name: Install Lemurro
       run: |
         composer global require --no-progress --no-scripts --no-plugins lemurro/installer
@@ -29,8 +26,10 @@ jobs:
 
     - name: Prepare database
       run: |
-        mysql -h 127.0.0.1 -u root lemurro < ~/work/ghactions_test/ghactions_test/testproject/api/database.sql
-        mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
+        touch ~/.my.cnf
+        echo -e "[mysql]\nuser=root\npassword=root\n" > ~/.my.cnf
+        mysql -h 127.0.0.1 lemurro < ~/work/ghactions_test/ghactions_test/testproject/api/database.sql
+        mysql -h 127.0.0.1 --execute="SELECT * FROM lemurro.users"
 
     - name: "Configuration: file.yaml"
       working-directory: /home/circleci/project/testproject/api/app/Overrides/Configs
