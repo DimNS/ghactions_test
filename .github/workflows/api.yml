@@ -28,6 +28,7 @@ jobs:
       run: |
         touch ~/.my.cnf
         echo -e "[mysql]\nuser=root\npassword=root\n" > ~/.my.cnf
+        mysql -h 127.0.0.1 --execute="CREATE DATABASE lemurro"
         mysql -h 127.0.0.1 lemurro < ~/work/ghactions_test/ghactions_test/testproject/api/database.sql
         mysql -h 127.0.0.1 --execute="SELECT * FROM lemurro.users"
 
