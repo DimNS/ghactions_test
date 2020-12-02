@@ -23,9 +23,8 @@ jobs:
     - name: Install Lemurro
       run: |
         composer global require --no-progress --no-scripts --no-plugins lemurro/installer
-        sed -i 's/atomcms/smcmota/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
+        sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
         cat ~/.composer/vendor/lemurro/installer/src/NewCommand.php
-#        sed -i 's/setTty\(true\)/setTty\(false\)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
 #        ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
 #        composer install --working-dir=~/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
 
