@@ -38,28 +38,29 @@ jobs:
         mysql -h 127.0.0.1 lemurro < $PROJ_FOLDER/api/database.sql
         mysql -h 127.0.0.1 --execute="SELECT * FROM lemurro.users"
 
-    - name: "Configuration: file.yaml"
+    - name: "Configuration application"
       run: |
+        touch $CONFIGS_FOLDER/database.yaml
         touch $CONFIGS_FOLDER/file.yaml
-        echo -e "file:\n  path_logs: $PROJ_FOLDER/api/var/logs\n  path_temp: $PROJ_FOLDER/api/var/temp\n  path_upload: $PROJ_FOLDER/api/var/documents" > $CONFIGS_FOLDER/file.yaml
-        cat $CONFIGS_FOLDER/file.yaml
-
-    - name: "Configuration: guides.yaml"
-      run: |
         touch $CONFIGS_FOLDER/guides.yaml
+        echo -e "database:\n  mysql:\n    password: root" > $CONFIGS_FOLDER/database.yaml
+        echo -e "file:\n  path_logs: $PROJ_FOLDER/api/var/logs\n  path_temp: $PROJ_FOLDER/api/var/temp\n  path_upload: $PROJ_FOLDER/api/var/documents" > $CONFIGS_FOLDER/file.yaml
         echo -e "guides:\n  classes:\n    example: Example" > $CONFIGS_FOLDER/guides.yaml
+        cat $CONFIGS_FOLDER/file.yaml
         cat $CONFIGS_FOLDER/guides.yaml
 
-    - name: "Configuration: [app]api.suite.yml"
+    - name: "Configuration application tests"
       run: |
         cp $APP_TESTS_FOLDER/api.suite.dist.yml $APP_TESTS_FOLDER/api.suite.yml
         sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $APP_TESTS_FOLDER/api.suite.yml
+        sed -i 's/password: ""/password: "root"/g' $APP_TESTS_FOLDER/api.suite.yml
         cat $APP_TESTS_FOLDER/api.suite.yml
 
-    - name: "Configuration: [core]api.suite.yml"
+    - name: "Configuration core tests"
       run: |
         cp $CORE_TESTS_FOLDER/api.suite.dist.yml $CORE_TESTS_FOLDER/api.suite.yml
         sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $CORE_TESTS_FOLDER/api.suite.yml
+        sed -i 's/password: ""/password: "root"/g' $CORE_TESTS_FOLDER/api.suite.yml
         cat $CORE_TESTS_FOLDER/api.suite.yml
 
     - name: "Running web server"
