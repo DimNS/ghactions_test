@@ -13,9 +13,9 @@ jobs:
 
     env:
       PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
-      CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Overrides/Configs
-      APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
-      CORE_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core/tests
+      CONFIGS_FOLDER: $PROJ_FOLDER/api/app/Overrides/Configs
+      APP_TESTS_FOLDER: $PROJ_FOLDER/api/tests
+      CORE_TESTS_FOLDER: $PROJ_FOLDER/api/vendor/lemurro/api-core/tests
 
     steps:
       - uses: actions/checkout@v2
