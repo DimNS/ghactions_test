@@ -23,11 +23,13 @@ jobs:
     - name: Install Lemurro
       run: |
         composer global require --no-progress --no-scripts --no-plugins lemurro/installer
+        sed -i 's/setTty\(true\)/setTty\(false\)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
         ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
-#        composer install --working-dir=/home/circleci/project/testproject/api/vendor/lemurro/api-core
+#        composer install --working-dir=~/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
 
-# /home/runner/work/ghactions_test/ghactions_test
-# /home/runner/.composer
+# ~/.composer
+# ~/work/ghactions_test/ghactions_test
+# ~/work/ghactions_test/ghactions_test/testproject
 
 #      # prepare database
 #      - run: sudo apt install default-mysql-client
