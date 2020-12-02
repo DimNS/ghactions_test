@@ -14,6 +14,8 @@ jobs:
     env:
       PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
       CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Overrides/Configs
+      APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
+      CORE_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core/tests
 
     steps:
     - uses: actions/checkout@v2
@@ -39,7 +41,7 @@ jobs:
     - name: "Configuration: file.yaml"
       run: |
         touch $CONFIGS_FOLDER/file.yaml
-        echo -e "file:\n  path_logs: $PROJ_FOLDER/api/var/logs\n  path_temp: /home/runner/work/ghactions_test/ghactions_test/testproject/api/var/temp\n  path_upload: /home/runner/work/ghactions_test/ghactions_test/testproject/api/var/documents" > $CONFIGS_FOLDER/file.yaml
+        echo -e "file:\n  path_logs: $PROJ_FOLDER/api/var/logs\n  path_temp: $PROJ_FOLDER/api/var/temp\n  path_upload: $PROJ_FOLDER/api/var/documents" > $CONFIGS_FOLDER/file.yaml
         cat $CONFIGS_FOLDER/file.yaml
 
     - name: "Configuration: guides.yaml"
@@ -50,31 +52,25 @@ jobs:
 
     - name: "Configuration: [app]api.suite.yml"
       run: |
-        cp $PROJ_FOLDER/api/tests/api.suite.dist.yml $PROJ_FOLDER/api/tests/api.suite.yml
-        sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $PROJ_FOLDER/api/tests/api.suite.yml
-        cat $PROJ_FOLDER/api/tests/api.suite.yml
+        cp $APP_TESTS_FOLDER/api.suite.dist.yml $APP_TESTS_FOLDER/api.suite.yml
+        sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $APP_TESTS_FOLDER/api.suite.yml
+        cat $APP_TESTS_FOLDER/api.suite.yml
 
     - name: "Configuration: [core]api.suite.yml"
       run: |
-        cp $PROJ_FOLDER/api/vendor/lemurro/api-core/tests/api.suite.dist.yml $PROJ_FOLDER/api/vendor/lemurro/api-core/tests/api.suite.yml
-        sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $PROJ_FOLDER/api/vendor/lemurro/api-core/tests/api.suite.yml
-        cat $PROJ_FOLDER/api/vendor/lemurro/api-core/tests/api.suite.yml
+        cp $CORE_TESTS_FOLDER/api.suite.dist.yml $CORE_TESTS_FOLDER/api.suite.yml
+        sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $CORE_TESTS_FOLDER/api.suite.yml
+        cat $CORE_TESTS_FOLDER/api.suite.yml
 
     - name: "Running web server"
-      run: php -S localhost:8000 -t $PROJ_FOLDER/api/public
+      run: php -S localhost:8000 -t $PROJ_FOLDER/api/public &
 
-# ~/.composer
-# ~/work/ghactions_test/ghactions_test
-# ~/work/ghactions_test/ghactions_test/testproject
+    - name: "Tests: app"
+      run: |
+        cd $PROJ_FOLDER/api
+        php vendor/bin/codecept run api
 
-
-#      - run:
-#          name: "Tests: app"
-#          command: |
-#            cd /home/runner/work/ghactions_test/ghactions_test/testproject/api
-#            php vendor/bin/codecept run api
-#      - run:
-#          name: "Tests: core"
-#          command: |
-#            cd /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
-#            php vendor/bin/codecept run api
+    - name: "Tests: core"
+      run: |
+        cd $PROJ_FOLDER/api/vendor/lemurro/api-core
+        php vendor/bin/codecept run api
