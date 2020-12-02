@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     env:
-      LEMURRO_VERSION: 2.0
+      LEMURRO_VERSION: "2.0"
       PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
       CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Overrides/Configs
       APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
@@ -27,7 +27,7 @@ jobs:
         run: |
           composer global require --no-progress --no-scripts --no-plugins lemurro/installer
           sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
-          ~/.composer/vendor/bin/lemurro new testproject --lv={$LEMURRO_VERSION} --api --skip --silent
+          ~/.composer/vendor/bin/lemurro new testproject --lv=$LEMURRO_VERSION --api --skip --silent
           composer install --working-dir=$PROJ_FOLDER/api/vendor/lemurro/api-core
 
       - name: "Prepare database"
