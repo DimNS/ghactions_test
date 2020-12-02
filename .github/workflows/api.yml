@@ -25,19 +25,17 @@ jobs:
         composer global require --no-progress --no-scripts --no-plugins lemurro/installer
         sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
         ~/.composer/vendor/bin/lemurro new testproject --lv=2.0 --api --skip --silent
-        ls /home/runner/work/ghactions_test/ghactions_test/testproject/api
-        ls /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor
-        ls /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
-#        composer install --working-dir=/home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
+        composer install --working-dir=/home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core
 
+    - name: Prepare database
+      run: |
+        mysql -h 127.0.0.1 -u root -proot lemurro < ~/work/ghactions_test/ghactions_test/testproject/api/database.sql
+        mysql -h 127.0.0.1 -u root -proot --execute="SELECT * FROM lemurro.users"
 # ~/.composer
 # ~/work/ghactions_test/ghactions_test
 # ~/work/ghactions_test/ghactions_test/testproject
 
-#      # prepare database
 #      - run: sudo apt install default-mysql-client
-#      - run: mysql -h 127.0.0.1 -u root lemurro < /home/circleci/project/testproject/api/database.my.sql
-#      - run: mysql -h 127.0.0.1 -u root --execute="SELECT * FROM lemurro.users"
 #      # configuration
 #      - run:
 #          name: "Configuration: file.yaml"
