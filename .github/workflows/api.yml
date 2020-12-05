@@ -10,8 +10,9 @@ jobs:
 
     strategy:
       matrix:
-        lemurro_version:
-          - "2.0"
+       include:
+         - lemurro_version: "2.0"
+           sql_file: "database.sql"
 
     env:
       LEMURRO_VERSION: ${{ matrix.lemurro_version }}
@@ -38,7 +39,7 @@ jobs:
           touch ~/.my.cnf
           echo -e "[mysql]\nuser=root\npassword=root\n" > ~/.my.cnf
           mysql -h 127.0.0.1 --execute="CREATE DATABASE lemurro"
-          mysql -h 127.0.0.1 lemurro < $PROJ_FOLDER/api/database.sql
+          mysql -h 127.0.0.1 lemurro < $PROJ_FOLDER/api/${{ matrix.sql_file }}
           mysql -h 127.0.0.1 --execute="SELECT * FROM lemurro.users"
 
       - name: "Configuration application"
