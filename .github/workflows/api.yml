@@ -20,10 +20,10 @@ jobs:
 
     env:
       LEMURRO_VERSION: ${{ matrix.lemurro_version }}
-      PROJ_FOLDER: /home/runner/work/api-core/api-core/testproject
-      CONFIGS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/app/Overrides/Configs
-      APP_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/tests
-      CORE_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/vendor/lemurro/api-core/tests
+      PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
+      CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Overrides/Configs
+      APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
+      CORE_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core/tests
 
     steps:
       - uses: actions/checkout@v2
@@ -43,10 +43,6 @@ jobs:
           sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
           ~/.composer/vendor/bin/lemurro new testproject --lv=$LEMURRO_VERSION --api --skip --silent
           composer install --working-dir=$PROJ_FOLDER/api/vendor/lemurro/api-core
-          ls /home/runner/work
-          ls /home/runner/work/api-core
-          ls /home/runner/work/api-core/api-core
-          ls /home/runner/work/api-core/api-core/testproject
 
       - name: "Prepare database"
         run: |
