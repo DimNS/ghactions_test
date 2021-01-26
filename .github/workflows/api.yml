@@ -11,12 +11,9 @@ jobs:
     strategy:
       matrix:
        include:
-         - lemurro_version: "2.0"
+         - lemurro_version: "2.1"
            php_version: "7.4"
-           sql_file: "database.sql"
-#         - lemurro_version: "2.1"
-#           php_version: "7.4"
-#           sql_file: "database.my.sql"
+           sql_file: "database.my.sql"
 
     env:
       LEMURRO_VERSION: ${{ matrix.lemurro_version }}
