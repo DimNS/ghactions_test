@@ -14,9 +14,9 @@ jobs:
          - lemurro_version: "2.0"
            php_version: "7.4"
            sql_file: "database.sql"
-         - lemurro_version: "2.1"
-           php_version: "7.4"
-           sql_file: "database.my.sql"
+#         - lemurro_version: "2.1"
+#           php_version: "7.4"
+#           sql_file: "database.my.sql"
 
     env:
       LEMURRO_VERSION: ${{ matrix.lemurro_version }}
@@ -43,6 +43,10 @@ jobs:
           sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
           ~/.composer/vendor/bin/lemurro new testproject --lv=$LEMURRO_VERSION --api --skip --silent
           composer install --working-dir=$PROJ_FOLDER/api/vendor/lemurro/api-core
+          ls /home/runner/work
+          ls /home/runner/work/api-core
+          ls /home/runner/work/api-core/api-core
+          ls /home/runner/work/api-core/api-core/testproject
 
       - name: "Prepare database"
         run: |
