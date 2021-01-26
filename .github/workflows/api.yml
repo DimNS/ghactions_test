@@ -13,13 +13,15 @@ jobs:
        include:
          - lemurro_version: "2.0"
            sql_file: "database.sql"
+         - lemurro_version: "2.1"
+           sql_file: "database.my.sql"
 
     env:
       LEMURRO_VERSION: ${{ matrix.lemurro_version }}
-      PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
-      CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Overrides/Configs
-      APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
-      CORE_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core/tests
+      PROJ_FOLDER: /home/runner/work/api-core/api-core/testproject
+      CONFIGS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/app/Overrides/Configs
+      APP_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/tests
+      CORE_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/vendor/lemurro/api-core/tests
 
     steps:
       - uses: actions/checkout@v2
@@ -31,6 +33,7 @@ jobs:
         run: |
           composer global require --no-progress --no-scripts --no-plugins lemurro/installer
           sed -i 's/setTty(true)/setTty(false)/g' ~/.composer/vendor/lemurro/installer/src/NewCommand.php
+          echo $LEMURRO_VERSION
           ~/.composer/vendor/bin/lemurro new testproject --lv=$LEMURRO_VERSION --api --skip --silent
           composer install --working-dir=$PROJ_FOLDER/api/vendor/lemurro/api-core
 
@@ -56,25 +59,24 @@ jobs:
       - name: "Configuration application tests"
         run: |
           cp $APP_TESTS_FOLDER/api.suite.dist.yml $APP_TESTS_FOLDER/api.suite.yml
-          sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $APP_TESTS_FOLDER/api.suite.yml
           sed -i 's/password: ""/password: "root"/g' $APP_TESTS_FOLDER/api.suite.yml
           cat $APP_TESTS_FOLDER/api.suite.yml
 
       - name: "Configuration core tests"
         run: |
           cp $CORE_TESTS_FOLDER/api.suite.dist.yml $CORE_TESTS_FOLDER/api.suite.yml
-          sed -i 's/lemurro\-api\.localhost/localhost\:8000/g' $CORE_TESTS_FOLDER/api.suite.yml
           sed -i 's/password: ""/password: "root"/g' $CORE_TESTS_FOLDER/api.suite.yml
           cat $CORE_TESTS_FOLDER/api.suite.yml
 
       - name: "Running web server"
         run: php -S localhost:8000 -t $PROJ_FOLDER/api/public &
 
-      - name: "Tests: app"
+      - name: "Running application tests"
         run: |
           cd $PROJ_FOLDER/api
           php vendor/bin/codecept run api
-      - name: "Tests: core"
+
+      - name: "Running core tests"
         run: |
           cd $PROJ_FOLDER/api/vendor/lemurro/api-core
           php vendor/bin/codecept run api
