@@ -16,15 +16,16 @@ jobs:
             php_version: "7.4"
             operating-system: ubuntu-20.04
 
-    env:
-      PROJ_FOLDER: $GITHUB_WORKSPACE/testproject
-      CONFIGS_FOLDER: $GITHUB_WORKSPACE/testproject/api/app/Configs
-      APP_TESTS_FOLDER: $GITHUB_WORKSPACE/testproject/api/tests
-      CORE_TESTS_FOLDER: $GITHUB_WORKSPACE/testproject/api/vendor/lemurro/api-core/tests
-
     steps:
       - name: "Checkout"
         uses: actions/checkout@v2
+
+      - name: "Set environment variables"
+        run: |
+          echo "PROJ_FOLDER=$GITHUB_WORKSPACE/testproject" >> $GITHUB_ENV
+          echo "CONFIGS_FOLDER=$GITHUB_WORKSPACE/testproject/api/app/Configs" >> $GITHUB_ENV
+          echo "APP_TESTS_FOLDER=$GITHUB_WORKSPACE/testproject/api/tests" >> $GITHUB_ENV
+          echo "CORE_TESTS_FOLDER=$GITHUB_WORKSPACE/testproject/api/vendor/lemurro/api-core/tests" >> $GITHUB_ENV
 
       - name: "Test"
         run: |
