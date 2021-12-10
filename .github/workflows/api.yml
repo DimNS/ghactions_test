@@ -44,9 +44,9 @@ jobs:
         run: |
           cp /etc/php/7.4/cli/php.ini $GITHUB_WORKSPACE/php.ini
           sed -i 's/log_errors = Off/log_errors = On/g' $GITHUB_WORKSPACE/php.ini
-          sed -i "s/;error_log = php_errors.log/error_log = php_errors.log/g" $GITHUB_WORKSPACE/php.ini
+          sed -i 's/;error_log = php_errors.log/error_log = \/home\/runner\/work\/ghactions_test\/ghactions_test\/php_errors.log/g' $GITHUB_WORKSPACE/php.ini
           cat $GITHUB_WORKSPACE/php.ini
-          #sudo echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
+
           
           
           
