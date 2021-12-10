@@ -42,8 +42,9 @@ jobs:
 
       - name: "PHP"
         run: |
-          sudo touch /etc/php/7.4/cli/conf.d/my_php.ini
-          sudo echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
-          sudo cat /etc/php/7.4/cli/conf.d/my_php.ini
+          cp /etc/php/7.4/cli/php.ini /var/php.ini
+          cat /var/php.ini
+          #sudo echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
+          
           
           
