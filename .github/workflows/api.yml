@@ -33,5 +33,5 @@ jobs:
           touch $PROJ_FOLDER/php.ini
           echo -e "log_errors = Off\n;error_log = php_errors.log\n" > $PROJ_FOLDER/php.ini
           sed -i 's/log_errors = Off/log_errors = On/g' $PROJ_FOLDER/php.ini
-          sed -i "s/;error_log = php_errors.log/error_log = $PROJ_FOLDER php_errors.log/g" $PROJ_FOLDER/php.ini
+          sed -i "s|;error_log = php_errors.log|error_log = $PROJ_FOLDER/php_errors.log|g" $PROJ_FOLDER/php.ini
           cat $PROJ_FOLDER/php.ini
