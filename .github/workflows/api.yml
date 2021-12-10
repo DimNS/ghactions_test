@@ -17,10 +17,10 @@ jobs:
             operating-system: ubuntu-20.04
 
     env:
-      PROJ_FOLDER: /home/runner/work/api-core/api-core/testproject
-      CONFIGS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/app/Configs
-      APP_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/tests
-      CORE_TESTS_FOLDER: /home/runner/work/api-core/api-core/testproject/api/vendor/lemurro/api-core/tests
+      PROJ_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject
+      CONFIGS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/app/Configs
+      APP_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/tests
+      CORE_TESTS_FOLDER: /home/runner/work/ghactions_test/ghactions_test/testproject/api/vendor/lemurro/api-core/tests
 
     steps:
       - name: "Checkout"
