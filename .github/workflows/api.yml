@@ -96,6 +96,6 @@ jobs:
       - name: "Debug"
         if: failure()
         run: |
+          ls /var/log
+          ls $PROJ_FOLDER/api
           ls $PROJ_FOLDER/api/logs
-          ls $PROJ_FOLDER/api/logs/2021
-          ls $PROJ_FOLDER/api/logs/2021/12
