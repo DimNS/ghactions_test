@@ -43,8 +43,19 @@ jobs:
       - name: "PHP"
         run: |
           cp /etc/php/7.4/cli/php.ini $GITHUB_WORKSPACE/php.ini
+          sed -i 's/error_reporting = E_ALL & ~E_DEPRECATED & ~E_STRICT/error_reporting: E_ALL/g' $GITHUB_WORKSPACE/php.ini
+          sed -i 's/log_errors = Off/log_errors = On/g' $GITHUB_WORKSPACE/php.ini
+          sed -i 's/;error_log = php_errors.log/error_log = $GITHUB_WORKSPACE/php_errors.log/g' $GITHUB_WORKSPACE/php.ini
           cat $GITHUB_WORKSPACE/php.ini
           #sudo echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
+          
+          
+          
+          
+          
+          
+          
+          
           
           
           
