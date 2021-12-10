@@ -92,7 +92,7 @@ jobs:
         if: failure()
         with:
           name: my-artifact
-          path: $PROJ_FOLDER/api/logs/2021/12/10-core.log
+          path: $PROJ_FOLDER/api/logs/2021/12
 
       - name: "Running application tests"
         run: |
