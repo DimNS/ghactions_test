@@ -100,4 +100,4 @@ jobs:
       - name: "Debug"
         if: failure()
         run: |
-          car $GITHUB_WORKSPACE/php_errors.log
+          cat $GITHUB_WORKSPACE/php_errors.log
