@@ -88,16 +88,13 @@ jobs:
           cd $PROJ_FOLDER/api/vendor/lemurro/api-core
           php vendor/bin/codecept run api
 
+      - uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: my-artifact
+          path: $PROJ_FOLDER/api
+
       - name: "Running application tests"
         run: |
           cd $PROJ_FOLDER/api
           php vendor/bin/codecept run api
-
-      - run: mkdir -p $PROJ_FOLDER/artifact
-
-      - run: echo hello > $PROJ_FOLDER/artifact/world.txt
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: my-artifact
-          path: $PROJ_FOLDER/artifact/world.txt
