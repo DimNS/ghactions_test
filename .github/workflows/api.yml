@@ -39,5 +39,6 @@ jobs:
           lsb_release -a
           mysql -V
           php -v
+          php -r "ini_set('error_log', '/var/log/php_error.log');"
           php -r "echo 'error_log = |' . ini_get('error_log') . '|';"
 
