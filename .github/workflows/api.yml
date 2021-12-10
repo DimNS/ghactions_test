@@ -39,4 +39,11 @@ jobs:
           lsb_release -a
           mysql -V
           php -v
-          php -i
+
+      - name: "PHP"
+        run: |
+          touch /etc/php/7.4/cli/conf.d/my_php.ini
+          echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
+          cat /etc/php/7.4/cli/conf.d/my_php.ini
+          
+          
