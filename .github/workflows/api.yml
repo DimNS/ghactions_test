@@ -42,8 +42,8 @@ jobs:
 
       - name: "PHP"
         run: |
-          cp /etc/php/7.4/cli/php.ini /var/php.ini
-          cat /var/php.ini
+          cp /etc/php/7.4/cli/php.ini $PROJ_FOLDER/php.ini
+          cat $PROJ_FOLDER/php.ini
           #sudo echo -e "error_log=/var/log/php_errors.log\n" > /etc/php/7.4/cli/conf.d/my_php.ini
           
           
