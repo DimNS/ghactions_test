@@ -83,7 +83,7 @@ jobs:
 
       - name: "Running web server"
         run: |
-          cp /etc/php/7.4/cli/php.ini $GITHUB_WORKSPACE/php.ini
+          cp /etc/php/${{ matrix.php_version }}/cli/php.ini $GITHUB_WORKSPACE/php.ini
           sed -i 's/log_errors = Off/log_errors = On/g' $GITHUB_WORKSPACE/php.ini
           sed -i "s|;error_log = php_errors.log|error_log = $GITHUB_WORKSPACE/php_errors.log|g" $GITHUB_WORKSPACE/php.ini
           php -S localhost:8000 -t $PROJ_FOLDER/api/public -c $GITHUB_WORKSPACE/php.ini &
